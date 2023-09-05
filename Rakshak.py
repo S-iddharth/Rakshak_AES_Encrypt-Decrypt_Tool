@@ -30,7 +30,7 @@ def copy_key():
 
 def encrypt_message():
     global key
-    message = message_entry.get("1.0", tk.END).strip()  # Get the message from Text widget
+    message = message_entry.get("1.0", tk.END).strip()  
 
     try:
         fernet = Fernet(key)
@@ -46,7 +46,7 @@ def copy_ciphertext():
     ciphertext = ciphertext_text.get("1.0", tk.END)
     root.clipboard_clear()
     root.clipboard_append(ciphertext)
-    root.update()  # This is required on some systems
+    root.update()  
     messagebox.showinfo("Copied", "Ciphertext copied to clipboard.")
 
 root = tk.Tk()
@@ -63,7 +63,7 @@ bg_label = tk.Label(root, image=bg_image)
 bg_label.place(relwidth=1, relheight=1)
 
 generate_key_button = ttk.Button(root, text="Generate Key", command=generate_key)
-generate_key_button.pack(pady=10)  # Increased spacing below the button
+generate_key_button.pack(pady=10)  
 
 key_label = ttk.Label(root, text="Key:", background="light grey")
 key_label.pack()
@@ -71,30 +71,26 @@ key_entry = ttk.Entry(root, show="")
 key_entry.pack()
 
 copy_key_button = ttk.Button(root, text="Copy Key", command=copy_key)
-copy_key_button.pack(pady=10)  # Increased spacing below the button
+copy_key_button.pack(pady=10)  
 
 message_label = ttk.Label(root, text="Enter Message:", background="light grey")
 message_label.pack()
 message_entry = tk.Text(root, wrap=tk.WORD, height=5, width=30, bg="light grey")  # Use tk.Text for multi-line input
-message_entry.pack(pady=10)  # Increased spacing below the text widget
-
+message_entry.pack(pady=10)  
 encrypt_button = ttk.Button(root, text="Encrypt", command=encrypt_message)
-encrypt_button.pack(pady=10)  # Increased spacing below the button
-
+encrypt_button.pack(pady=10)  
 ciphertext_label = ttk.Label(root, text="Ciphertext:", background="light grey")
 ciphertext_label.pack()
 ciphertext_text = tk.Text(root, wrap=tk.WORD, height=5, width=30, bg="light grey")
-ciphertext_text.pack(pady=10)  # Increased spacing below the text widget
-
+ciphertext_text.pack(pady=10)  
 copy_button = ttk.Button(root, text="Copy Ciphertext", state=tk.DISABLED, command=copy_ciphertext)
-copy_button.pack(pady=10)  # Increased spacing below the button
-
+copy_button.pack(pady=10)  
 def decrypt_message():
     key1 = key1_entry.get()
-    ciphertext = ciphertext_entry.get("1.0", tk.END).strip()  # Get the ciphertext from Text widget
+    ciphertext = ciphertext_entry.get("1.0", tk.END).strip()  
 
     try:
-        key_bytes = key1.encode()  # Encode the key as bytes
+        key_bytes = key1.encode()  
         fernet = Fernet(key_bytes)
         decrypted_message = fernet.decrypt(ciphertext.encode())
         message_text.delete("1.0", tk.END)
@@ -111,16 +107,14 @@ key1_label = ttk.Label(root, text="Key: (Copy and paste the key using Ctrl+v)", 
 key1_label.pack()
 
 key1_entry = ttk.Entry(root, show="", background = "light grey")
-key1_entry.pack(pady=10)  # Increased spacing below the entry field
-
+key1_entry.pack(pady=10)  
 ciphertext_label = ttk.Label(root, text="Ciphertext: (Copy the CipherText and paste here using Ctrl+v)")
 ciphertext_label.pack()
 
 ciphertext_entry = tk.Text(root, wrap=tk.WORD, height=5, width=40, bg = "light grey")
-ciphertext_entry.pack(pady=10)  # Increased spacing below the text widget
-
+ciphertext_entry.pack(pady=10)  
 decrypt_button = ttk.Button(root, text="Decrypt", command=decrypt_message)
-decrypt_button.pack(pady=10)  # Increased spacing below the button
+decrypt_button.pack(pady=10)  
 
 message_label = ttk.Label(root, text="Decrypted Message:", background="light grey")
 message_label.pack()
