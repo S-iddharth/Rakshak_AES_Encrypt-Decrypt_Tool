@@ -65,7 +65,7 @@ bg_label.place(relwidth=1, relheight=1)
 generate_key_button = ttk.Button(root, text="Generate Key", command=generate_key)
 generate_key_button.pack(pady=10)  # Increased spacing below the button
 
-key_label = ttk.Label(root, text="Key:", background="light grey", foreground =)
+key_label = ttk.Label(root, text="Key:", background="light grey")
 key_label.pack()
 key_entry = ttk.Entry(root, show="")
 key_entry.pack()
