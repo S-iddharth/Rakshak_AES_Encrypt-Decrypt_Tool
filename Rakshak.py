@@ -50,7 +50,7 @@ def copy_ciphertext():
     messagebox.showinfo("Copied", "Ciphertext copied to clipboard.")
 
 root = tk.Tk()
-root.title("AES Encrypter")
+root.title("AES Encrypter(By Siddharth Gupta)")
 
 root.resizable(False, False) 
 root.configure(bg="black")
@@ -103,7 +103,7 @@ def decrypt_message():
         messagebox.showerror("Error", str(e))
         
 root = tk.Tk()
-root.title("AES Decrypter")
+root.title("AES Decrypter(By Siddharth Gupta)")
 root.configure(bg="dark grey")
 root.resizable(False, False)
 
