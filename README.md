@@ -3,7 +3,7 @@
 
 AES Encrypter/Decrypter is a simple Python application built using the Tkinter library and the cryptography module. It allows users to encrypt and decrypt messages using the AES (Advanced Encryption Standard) encryption algorithm.
 
-![AES Encrypter/Decrypter Screenshot](path)
+![AES Encrypter/Decrypter Screenshot](https://github.com/S-iddharth/Rakshak/blob/main/1684246625426.png)
 
 ## Features
 
