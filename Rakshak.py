@@ -58,7 +58,7 @@ root.configure(bg="black")
 mask_unmask_button = ttk.Button(root, text="Mask/Unmask Key", command=lambda: toggle_key_visibility(not key_visible))
 mask_unmask_button.pack(pady=10)
 
-bg_image = PhotoImage(file="/home/lucifer/Screenshot from 2023-09-03 18-23-29.png")  
+bg_image = PhotoImage(file="https://drive.google.com/file/d/1TOo71yFfyUsgmtkJ7W1Kift9H7_s4O3D/view?usp=drive_link")  
 bg_label = tk.Label(root, image=bg_image)
 bg_label.place(relwidth=1, relheight=1)
 
