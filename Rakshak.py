@@ -53,13 +53,12 @@ root = tk.Tk()
 root.title("AES Encrypter(By Siddharth Gupta)")
 
 root.resizable(False, False) 
-root.configure(bg="black")
+root.configure(bg="light grey")
 
 mask_unmask_button = ttk.Button(root, text="Mask/Unmask Key", command=lambda: toggle_key_visibility(not key_visible))
 mask_unmask_button.pack(pady=10)
-
-bg_image = PhotoImage(file="https://drive.google.com/file/d/1Z8wZ_YHZE-11XR7y6qQBCClF7yOPXmsQ/view?usp=sharing")  
-bg_label = tk.Label(root, image=bg_image)
+  
+bg_label = tk.Label(root)
 bg_label.place(relwidth=1, relheight=1)
 
 generate_key_button = ttk.Button(root, text="Generate Key", command=generate_key)
@@ -123,4 +122,3 @@ message_text = tk.Text(root, wrap=tk.WORD, height=5, width=40, bg="light grey")
 message_text.pack(pady=10)  # Increased spacing below the text widget
 
 root.mainloop()
-
