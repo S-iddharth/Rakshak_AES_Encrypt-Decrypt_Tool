@@ -1,7 +1,9 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import messagebox
 from cryptography.fernet import Fernet
-from tkinter import PhotoImage 
+from customtkinter import *
+from tkinter import ttk, messagebox
+from PIL import Image, ImageTk
 
 key = None
 key_visible = True
@@ -30,95 +32,100 @@ def copy_key():
 
 def encrypt_message():
     global key
-    message = message_entry.get("1.0", tk.END).strip()  
-
+    message = message_entry.get("1.0", tk.END).strip()
     try:
         fernet = Fernet(key)
         encrypted_message = fernet.encrypt(message.encode())
         ciphertext_text.delete("1.0", tk.END)
         ciphertext_text.insert("1.0", encrypted_message.decode())
-        # Enable the copy button
-        copy_button.config(state=tk.NORMAL)
+        copy_button.configure(state=tk.NORMAL)
     except Exception as e:
         messagebox.showerror("Error", str(e))
 
 def copy_ciphertext():
-    ciphertext = ciphertext_text.get("1.0", tk.END)
+    ciphertext = ciphertext_text.get("1.0", tk.END).strip()
     root.clipboard_clear()
     root.clipboard_append(ciphertext)
-    root.update()  
+    root.update()
     messagebox.showinfo("Copied", "Ciphertext copied to clipboard.")
 
-root = tk.Tk()
-root.title("AES Encrypter(By Siddharth Gupta)")
-
-root.resizable(False, False) 
-root.configure(bg="light grey")
-
-mask_unmask_button = ttk.Button(root, text="Mask/Unmask Key", command=lambda: toggle_key_visibility(not key_visible))
-mask_unmask_button.pack(pady=10)
-  
-bg_label = tk.Label(root)
-bg_label.place(relwidth=1, relheight=1)
-
-generate_key_button = ttk.Button(root, text="Generate Key", command=generate_key)
-generate_key_button.pack(pady=10)  
-
-key_label = ttk.Label(root, text="Key:", background="light grey")
-key_label.pack()
-key_entry = ttk.Entry(root, show="")
-key_entry.pack()
-
-copy_key_button = ttk.Button(root, text="Copy Key", command=copy_key)
-copy_key_button.pack(pady=10)  
-
-message_label = ttk.Label(root, text="Enter Message:", background="light grey")
-message_label.pack()
-message_entry = tk.Text(root, wrap=tk.WORD, height=5, width=30, bg="light grey")  # Use tk.Text for multi-line input
-message_entry.pack(pady=10)  
-encrypt_button = ttk.Button(root, text="Encrypt", command=encrypt_message)
-encrypt_button.pack(pady=10)  
-ciphertext_label = ttk.Label(root, text="Ciphertext:", background="light grey")
-ciphertext_label.pack()
-ciphertext_text = tk.Text(root, wrap=tk.WORD, height=5, width=30, bg="light grey")
-ciphertext_text.pack(pady=10)  
-copy_button = ttk.Button(root, text="Copy Ciphertext", state=tk.DISABLED, command=copy_ciphertext)
-copy_button.pack(pady=10)  
 def decrypt_message():
-    key1 = key1_entry.get()
-    ciphertext = ciphertext_entry.get("1.0", tk.END).strip()  
-
+    key1 = key1_entry.get().strip()
+    ciphertext = ciphertext_entry.get("1.0", tk.END).strip()
     try:
-        key_bytes = key1.encode()  
-        fernet = Fernet(key_bytes)
+        fernet = Fernet(key1.encode())
         decrypted_message = fernet.decrypt(ciphertext.encode())
-        message_text.delete("1.0", tk.END)
-        message_text.insert("1.0", decrypted_message.decode())
+        decrypted_text.delete("1.0", tk.END)
+        decrypted_text.insert("1.0", decrypted_message.decode())
     except Exception as e:
         messagebox.showerror("Error", str(e))
-        
-root = tk.Tk()
-root.title("AES Decrypter(By Siddharth Gupta)")
-root.configure(bg="dark grey")
-root.resizable(False, False)
 
-key1_label = ttk.Label(root, text="Key: (Copy and paste the key using Ctrl+v)", background="light grey")
+root = CTk()
+root.title("AES Encrypter and Decrypter")
+root.geometry("750x800")
+root.configure()
+
+notebook = ttk.Notebook(root)
+encrypt_frame = ttk.Frame(notebook)
+decrypt_frame = ttk.Frame(notebook)
+
+notebook.add(encrypt_frame, text="Encrypt")
+notebook.add(decrypt_frame, text="Decrypt")
+notebook.pack(expand=True, fill='both')
+
+# Encryption Section
+CTkLabel(encrypt_frame, text="Encryption Section", text_color = "#000000").pack(pady=10)
+mask_unmask_button = CTkButton(encrypt_frame, text="Mask/Unmask Key", command=lambda: toggle_key_visibility(not key_visible), corner_radius=32, fg_color="transparent", hover_color="#4158D0", border_color="#FFCC70", border_width=2, text_color = "#000000")
+mask_unmask_button.pack(pady=10)
+
+generate_key_button = CTkButton(encrypt_frame, text="Generate Key", command=generate_key, corner_radius=32, fg_color="transparent", hover_color="#4158D0", border_color="#FFCC70", border_width=2, text_color = "#000000")
+generate_key_button.pack(pady=10)
+
+key_label = CTkLabel(encrypt_frame, text="Key:", text_color = "#FF0000")
+key_label.pack()
+key_entry = CTkEntry(encrypt_frame, show="")
+key_entry.pack(pady=10)
+
+copy_key_button = CTkButton(encrypt_frame, text="Copy Key", command=copy_key, corner_radius=32, fg_color="transparent", hover_color="#4158D0", border_color="#FFCC70", border_width=2, text_color = "#000000")
+copy_key_button.pack(pady=10)
+
+message_label = CTkLabel(encrypt_frame, text="Enter Message:", text_color = "#000000")
+message_label.pack()
+message_entry = CTkTextbox(encrypt_frame, wrap=tk.WORD, height=70, width=400)
+message_entry.pack(pady=10)
+
+encrypt_button = CTkButton(encrypt_frame, text="Encrypt", command=encrypt_message, corner_radius=32, fg_color="transparent", hover_color="#4158D0", border_color="#FFCC70", border_width=2, text_color = "#FF0000")
+encrypt_button.pack(pady=10)
+
+ciphertext_label = CTkLabel(encrypt_frame, text="Ciphertext:", text_color = "#FF0000")
+ciphertext_label.pack()
+ciphertext_text = CTkTextbox(encrypt_frame, wrap=tk.WORD, height=70, width=400)
+ciphertext_text.pack(pady=10)
+
+copy_button = CTkButton(encrypt_frame, text="Copy Ciphertext", state=tk.DISABLED, command=copy_ciphertext, corner_radius=32, fg_color="transparent", hover_color="#4158D0", border_color="#FFCC70", border_width=2, text_color = "#000000")
+copy_button.pack(pady=10)
+
+# Decryption Section
+CTkLabel(decrypt_frame, text="Decryption Section", text_color = "#000000").pack(pady=10)
+key1_label = CTkLabel(decrypt_frame, text="Key: (Copy and paste the key using Ctrl+v)", text_color = "#000000")
 key1_label.pack()
 
-key1_entry = ttk.Entry(root, show="", background = "light grey")
-key1_entry.pack(pady=10)  
-ciphertext_label = ttk.Label(root, text="Ciphertext: (Copy the CipherText and paste here using Ctrl+v)")
+key1_entry = CTkEntry(decrypt_frame, show="")
+key1_entry.pack(pady=10)
+
+ciphertext_label = CTkLabel(decrypt_frame, text="Ciphertext: (Copy the CipherText and paste here)", text_color = "#000000")
 ciphertext_label.pack()
 
-ciphertext_entry = tk.Text(root, wrap=tk.WORD, height=5, width=40, bg = "light grey")
-ciphertext_entry.pack(pady=10)  
-decrypt_button = ttk.Button(root, text="Decrypt", command=decrypt_message)
-decrypt_button.pack(pady=10)  
+ciphertext_entry = CTkTextbox(decrypt_frame, wrap=tk.WORD, height=70, width=400)
+ciphertext_entry.pack(pady=10)
 
-message_label = ttk.Label(root, text="Decrypted Message:", background="light grey")
-message_label.pack()
+decrypt_button = CTkButton(decrypt_frame, text="Decrypt", command=decrypt_message, corner_radius=32, fg_color="transparent", hover_color="#4158D0", border_color="#FFCC70", border_width=2, text_color = "#FF0000")
+decrypt_button.pack(pady=10)
 
-message_text = tk.Text(root, wrap=tk.WORD, height=5, width=40, bg="light grey")
-message_text.pack(pady=10)  # Increased spacing below the text widget
+decrypted_label = CTkLabel(decrypt_frame, text="Decrypted Message:", text_color = "#000000")
+decrypted_label.pack()
+
+decrypted_text = CTkTextbox(decrypt_frame, wrap=tk.WORD, height=70, width=400)
+decrypted_text.pack(pady=10)
 
 root.mainloop()
